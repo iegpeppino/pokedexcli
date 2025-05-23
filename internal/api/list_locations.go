@@ -17,6 +17,15 @@ func (client *Client) ListLocations(baseURL *string) (pokeLocations, error) {
 		url = *baseURL
 	}
 
+	if val, exists := client.cache.Get(url); exists {
+		locationResp := pokeLocations{}
+		err := json.Unmarshal(val, &locationResp)
+		if err != nil {
+			return pokeLocations{}, err
+		}
+		return locationResp, nil
+	}
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return pokeLocations{}, err

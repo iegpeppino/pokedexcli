@@ -23,7 +23,7 @@ func commandMap(config *Config) error {
 
 func commandMapb(config *Config) error {
 	if config.PreviousLocations == nil {
-		return errors.New("There are no previous locations")
+		return errors.New("there are no previous locations")
 	}
 
 	res, err := config.apiClient.ListLocations(config.PreviousLocations)

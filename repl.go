@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/iegpeppino/pokedexcli/api"
+	"github.com/iegpeppino/pokedexcli/internal/api"
 )
 
 type Config struct {
@@ -79,6 +79,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Get previous 20 location areas",
 			callback:    commandMapb,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Lists Pokemon located in current area",
+			callback:    commandExplore,
 		},
 	}
 }
