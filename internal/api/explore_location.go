@@ -2,12 +2,13 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
 
-func (client *Client) Explore_Location(location_name string) (encounters, error) {
-	url := apiURL + "/location-area" + location_name
+func (client *Client) ExploreLocation(location_name string) (encounters, error) {
+	url := apiURL + "/location-area/" + location_name
 
 	if val, exists := client.cache.Get(url); exists {
 		encountersResp := encounters{}
@@ -31,6 +32,7 @@ func (client *Client) Explore_Location(location_name string) (encounters, error)
 	defer res.Body.Close()
 
 	data, err := io.ReadAll(res.Body)
+	fmt.Println(res)
 	if err != nil {
 		return encounters{}, err
 	}
@@ -38,6 +40,11 @@ func (client *Client) Explore_Location(location_name string) (encounters, error)
 	encountersResp := encounters{}
 	err = json.Unmarshal(data, &encountersResp)
 	if err != nil {
+		fmt.Printf("error decoding sakura response: %v\n", err)
+		if e, ok := err.(*json.SyntaxError); ok {
+			fmt.Printf("syntax error at byte offset %d\n", e.Offset)
+		}
+		fmt.Printf("sakura response: %q\n", data)
 		return encounters{}, err
 	}
 

@@ -27,12 +27,23 @@ func startRepl(config *Config) {
 			continue
 		}
 
+		// Logic to catch arguments that follow a command
+		// If our clean line slice has more than one word
+		// the first word is our command and the rest
+		// are taken as arguments
+		commandName := line[0]
+		args := []string{}
+		if len(line) > 1 {
+			args = line[1:]
+		}
+
 		// Check if the first word of the input
 		// matches a command on our map
-		command, ok := getCommands()[line[0]]
+		command, ok := getCommands()[commandName]
 		// If it matches, makes the callback
 		if ok {
-			err := command.callback(config)
+
+			err := command.callback(config, args...)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -46,16 +57,15 @@ func startRepl(config *Config) {
 }
 
 func cleanInput(text string) []string {
-	var words []string
 	output := strings.ToLower(text)
-	words = strings.Fields(output)
+	words := strings.Fields(output)
 	return words
 }
 
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config) error
+	callback    func(*Config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -81,7 +91,7 @@ func getCommands() map[string]cliCommand {
 			callback:    commandMapb,
 		},
 		"explore": {
-			name:        "explore",
+			name:        "explore <location_name>",
 			description: "Lists Pokemon located in current area",
 			callback:    commandExplore,
 		},

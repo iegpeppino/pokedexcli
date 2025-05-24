@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func commandMap(config *Config) error {
+func commandMap(config *Config, args ...string) error {
 	res, err := config.apiClient.ListLocations(config.NextLocations)
 	if err != nil {
 		return err
@@ -21,7 +21,7 @@ func commandMap(config *Config) error {
 	return nil
 }
 
-func commandMapb(config *Config) error {
+func commandMapb(config *Config, args ...string) error {
 	if config.PreviousLocations == nil {
 		return errors.New("there are no previous locations")
 	}
