@@ -3,9 +3,11 @@ package main
 import (
 	"errors"
 	"fmt"
+
+	"github.com/iegpeppino/pokedexcli/internal/api"
 )
 
-func commandMap(config *Config, args ...string) error {
+func commandMap(config *Config, pokedex *map[string]api.Pokemon, args ...string) error {
 	res, err := config.apiClient.ListLocations(config.NextLocations)
 	if err != nil {
 		return err
@@ -21,7 +23,7 @@ func commandMap(config *Config, args ...string) error {
 	return nil
 }
 
-func commandMapb(config *Config, args ...string) error {
+func commandMapb(config *Config, pokedex *map[string]api.Pokemon, args ...string) error {
 	if config.PreviousLocations == nil {
 		return errors.New("there are no previous locations")
 	}

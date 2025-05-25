@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/iegpeppino/pokedexcli/internal/api"
-	//"github.com/iegpeppino/pokedexcli/internal/pokecache"
 )
 
 func main() {
@@ -16,10 +15,14 @@ func main() {
 		apiClient: client,
 	}
 
+	// Instance an empty pokedex
+	pokedex := map[string]api.Pokemon{}
+
 	// Create cache
 	//cache := pokecache.NewCache(60 * time.Second)
 
 	// Call startRepl using the client's config
-	startRepl(config)
+	// pass the users pokedex as argument
+	startRepl(config, &pokedex)
 
 }
