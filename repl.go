@@ -13,9 +13,10 @@ type Config struct {
 	apiClient         api.Client
 	NextLocations     *string
 	PreviousLocations *string
+	Pokedex           map[string]api.Pokemon
 }
 
-func startRepl(config *Config, pokedex *map[string]api.Pokemon) {
+func startRepl(config *Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -43,7 +44,7 @@ func startRepl(config *Config, pokedex *map[string]api.Pokemon) {
 		// If it matches, makes the callback
 		if ok {
 
-			err := command.callback(config, pokedex, args...)
+			err := command.callback(config, args...)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -65,7 +66,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config, *map[string]api.Pokemon, ...string) error
+	callback    func(*Config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {

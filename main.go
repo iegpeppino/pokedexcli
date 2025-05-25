@@ -13,16 +13,14 @@ func main() {
 	// Initiate config struct for the client
 	config := &Config{
 		apiClient: client,
+		Pokedex:   map[string]api.Pokemon{},
 	}
-
-	// Instance an empty pokedex
-	pokedex := map[string]api.Pokemon{}
 
 	// Create cache
 	//cache := pokecache.NewCache(60 * time.Second)
 
 	// Call startRepl using the client's config
 	// pass the users pokedex as argument
-	startRepl(config, &pokedex)
+	startRepl(config)
 
 }

@@ -4,11 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"math/rand/v2"
-
-	"github.com/iegpeppino/pokedexcli/internal/api"
 )
 
-func commandCatch(config *Config, pokedex *map[string]api.Pokemon, args ...string) error {
+func commandCatch(config *Config, args ...string) error {
 	if len(args) != 1 {
 		return errors.New("please enter a pokemon's name to catch")
 	}
@@ -30,7 +28,7 @@ func commandCatch(config *Config, pokedex *map[string]api.Pokemon, args ...strin
 
 	if roll <= success_chance {
 		fmt.Printf("%v was caught!\n", pokemon.Name)
-		(*pokedex)[name] = pokemon
+		config.Pokedex[name] = pokemon
 
 		return nil
 	}

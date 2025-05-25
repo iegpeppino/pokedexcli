@@ -3,11 +3,9 @@ package main
 import (
 	"errors"
 	"fmt"
-
-	"github.com/iegpeppino/pokedexcli/internal/api"
 )
 
-func commandExplore(config *Config, pokedex *map[string]api.Pokemon, args ...string) error {
+func commandExplore(config *Config, args ...string) error {
 	if len(args) != 1 {
 		return errors.New("please, provide the name of a location")
 	}
