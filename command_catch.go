@@ -29,7 +29,7 @@ func commandCatch(config *Config, args ...string) error {
 	if roll <= success_chance {
 		fmt.Printf("%v was caught!\n", pokemon.Name)
 		config.Pokedex[name] = pokemon
-
+		fmt.Println("You may now inspect it with the inspect command.")
 		return nil
 	}
 	fmt.Printf("%v escaped!\n", pokemon.Name)
